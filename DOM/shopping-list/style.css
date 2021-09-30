@@ -1,0 +1,133 @@
+*{
+  padding:0; margin:0;
+}
+ul,li{
+  list-style: none;
+}
+button{
+  background-color:transparent;
+  border-style: none;
+  cursor: pointer;
+  color:rgb(65, 65, 65);
+}
+body{
+  background-image: url("pink-yellow.jpeg");
+  background-position: center;
+  background-size:contain;
+  height:100vh;
+}
+.block{
+  background-color: rgba(255, 255, 255);
+  color:black;
+  width : 375px;
+  height:667px;
+  border-radius: 25px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 5px 5px 20px 5px rgb(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+}
+.block__empty{
+  will-change: opacity;
+  position:relative;
+  top:50%;
+  transform: translateY(-50%);
+  text-align: center;
+  color:rgba(156, 156, 156);
+}
+.block__top{
+  margin:10px 10px 10px 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.block__title{
+  padding-left: 10px;
+  font-weight: 700;
+  font-size: 25px;
+}
+.title__counter{
+  font-weight: 500;
+  font-size: 15px;
+  width:35px;
+  height:35px;
+  line-height: 35px;
+  color:white;
+  text-align: center;
+  background-color: #ffa9bc;
+  border-radius: 50%;
+}
+.block__list{
+  margin: 0 15px;
+  flex-basis:80%;
+  border-top:1px solid rgba(156, 156, 156, 0.5);
+  margin-bottom: 10px;
+  overflow-y: auto;
+}
+.list__items{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+.item{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 8px 0;
+  padding: 15px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 10px;
+  
+}
+.item__content{
+  width:90%;
+  font-size: 14px;
+  font-weight: 500;
+}
+.item__delete-btn{
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
+  width:30px;
+  height: 30px;
+  margin-left: 10px;
+  font-weight: 600;
+  background-color: rgb(253, 228, 188);
+  border-radius: 50%;
+  color:white;
+}
+.block__bottom{
+  background-color: rgb(255, 244, 225);
+  display: flex;
+  flex-direction: column;
+  padding:10px;
+  flex-basis: fit-content;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.bottom__input{
+  padding: 10px;
+  margin:10px 15px 5px 15px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+}
+.bottom__input:focus{
+  outline-style:solid;
+  outline-color: rgba(128, 128, 128);
+}
+.bottom__add-btn{
+  position: relative;
+  left:50%;
+  transform: translateX(-50%);
+  width:40px;
+  height: 40px;
+  font-size:20px;
+  background-color: rgb(255, 215, 151);
+  color:white;
+  border-radius: 50%;
+}
