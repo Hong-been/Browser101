@@ -16,6 +16,7 @@ inputBtn.addEventListener("click", async (event) => {
 	const row = createRow(inputText);
 
 	listItems.appendChild(row);
+	row.scrollIntoView({block:'end', behavior:'smooth'});
 	await animateOpacity(row, 0, 1,100);
 
 	inputBox.value = "";
@@ -42,8 +43,12 @@ function createRow(inputText) {
 }
 
 async function deleteItem(event) {
-	const parent = event.target.parentNode;
+	const parent = event.target.parentElement;
 	let nextNode=parent.nextSibling;
+
+	if(!nextNode){
+		parent.previousSibling.scrollIntoView({block:'end', behavior:'smooth'});
+	}
 
 	await animateOpacity(parent, 1, 0,100);
 	parent.remove();
@@ -54,7 +59,7 @@ async function deleteItem(event) {
 		emptyMesaage.style.opacity = 1;
 	}
   inputBox.focus();
-	
+
 	if(nextNode){
 		const siblings=[];
 		siblings.push(nextNode);
