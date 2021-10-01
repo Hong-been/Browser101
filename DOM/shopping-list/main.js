@@ -6,7 +6,7 @@ const emptyMesaage = document.querySelector(".list__empty");
 
 addEventListener("keypress",()=>inputBox.focus());
 
-inputBtn.addEventListener("click", (event) => {
+inputBtn.addEventListener("click", async (event) => {
 	event.preventDefault();
 	const inputText = inputBox.value;
 	if (!inputText) {
@@ -16,7 +16,7 @@ inputBtn.addEventListener("click", (event) => {
 	const row = createRow(inputText);
 
 	listItems.appendChild(row);
-	animateOpacity(row, 0, 1);
+	await animateOpacity(row, 0, 1,100);
 
 	inputBox.value = "";
 	inputBox.focus();
@@ -43,20 +43,57 @@ function createRow(inputText) {
 
 async function deleteItem(event) {
 	const parent = event.target.parentNode;
-	await animateOpacity(parent, 1, 0);
+	let nextNode=parent.nextSibling;
+
+	await animateOpacity(parent, 1, 0,100);
 	parent.remove();
 
-	counter.innerText = listItems.childElementCount;
+	const childCnt=listItems.childElementCount;
+	counter.innerText = childCnt;
 	if (counter.innerText == 0) {
 		emptyMesaage.style.opacity = 1;
 	}
   inputBox.focus();
+	
+	if(nextNode){
+		const siblings=[];
+		siblings.push(nextNode);
+		while(nextNode) {
+			nextNode=nextNode.nextSibling;
+			siblings.push(nextNode);
+		}
+		await animateMoveUp(siblings,100);
+	}
 }
-function animateOpacity(element, from, to) {
+
+function animateMoveUp(elements,duration) {
+	const height=elements[0].offsetHeight;
+	
+	elements.map(element => {
+		const animateMoveUpKeyframes = new KeyframeEffect(
+			element,
+			[{ transform:`translateY(${height}px)` }, { transform: `translateY(0px)`}],
+			{ duration },
+			{easing:'ease-in'},
+			{endDelay:100}
+		);
+		const animateMoveUp = new Animation(
+			animateMoveUpKeyframes,
+			document.timeline
+		);
+	
+		animateMoveUp.play();
+		return animateMoveUp.finished;
+	})
+	
+}
+function animateOpacity(element, from, to, duration) {
 	const animateOpacityKeyframes = new KeyframeEffect(
 		element,
 		[{ opacity: from }, { opacity: to }],
-		{ duration: 300 }
+		{ duration },
+		{easing:'ease'},
+		{endDelay:100}
 	);
 	const animateOpacity = new Animation(
 		animateOpacityKeyframes,
