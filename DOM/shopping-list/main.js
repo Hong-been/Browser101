@@ -46,7 +46,7 @@ async function deleteItem(event) {
 	const parent = event.target.parentElement;
 	let nextNode=parent.nextSibling;
 
-	if(!nextNode){
+	if(!nextNode && parent.previousSibling=='text'){
 		parent.previousSibling.scrollIntoView({block:'end', behavior:'smooth'});
 	}
 
