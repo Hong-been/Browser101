@@ -5,7 +5,7 @@ const listItems = document.querySelector(".list__items");
 const emptyMesaage = document.querySelector(".list__empty");
 let id=0; //실제 배포 프로젝트에는 UUID 같은 라이브러리를 사용하자.
 
-addEventListener("keypress",()=>inputBox.focus());
+addEventListener("keydown",()=>inputBox.focus());
 
 listItems.addEventListener('click',event=>{
 	const { target:{dataset:{targetId}}}=event;
