@@ -3,8 +3,17 @@ const inputBox = document.querySelector(".bottom__input");
 const inputBtn = document.querySelector(".bottom__add");
 const listItems = document.querySelector(".list__items");
 const emptyMesaage = document.querySelector(".list__empty");
+let id=0; //실제 배포 프로젝트에는 UUID 같은 라이브러리를 사용하자.
 
 addEventListener("keypress",()=>inputBox.focus());
+
+listItems.addEventListener('click',event=>{
+	const { target:{dataset:{targetId}}}=event;
+	if(targetId) {
+		const toBeDeleted=document.querySelector(`.item__row[data-id="${targetId-100}"]`);
+		deleteItem(toBeDeleted);
+	}
+});
 
 inputBtn.addEventListener("click", async (event) => {
 	event.preventDefault();
@@ -14,57 +23,49 @@ inputBtn.addEventListener("click", async (event) => {
 		return;
 	}
 	const row = createRow(inputText);
-
 	listItems.appendChild(row);
+
 	row.scrollIntoView({block:'end', behavior:'smooth'});
 	await animateOpacity(row, 0, 1,100);
 
 	inputBox.value = "";
 	inputBox.focus();
-	counter.innerText = listItems.childElementCount;
+	updateCounter(listItems.childElementCount);
 });
 function createRow(inputText) {
 	emptyMesaage.style.opacity = 0;
+	
 	const li = document.createElement("li");
-	const div = document.createElement("div");
-	const button = document.createElement("button");
-
 	li.setAttribute("class", "item__row");
-	div.setAttribute("class", "item__content");
-	div.innerText = inputText;
-	button.setAttribute("class", "item__delete");
-	button.innerText = "﹣";
-	button.addEventListener("click", deleteItem);
+	li.setAttribute("data-id", id);
 
-	li.appendChild(div);
-	li.appendChild(button);
-
+	li.innerHTML=`	<div class="item__content">${inputText}</div>
+												<button class="item__delete" data-target-id=${id+100}>﹣</button>`;
+	id++;
 	return li;
 }
+function updateCounter(cnt){
+	counter.innerText=cnt;
+	if(cnt===0)	emptyMesaage.style.opacity = 1;
+}
+async function deleteItem(target) {
+	let nextNode=target.nextSibling;
 
-async function deleteItem(event) {
-	const parent = event.target.parentElement;
-	let nextNode=parent.nextSibling;
-
-	if(!nextNode && parent.previousSibling=='text'){
-		parent.previousSibling.scrollIntoView({block:'end', behavior:'smooth'});
+	if(!nextNode && target.previousSibling=='text'){
+		target.previousSibling.scrollIntoView({block:'end', behavior:'smooth'});
 	}
 
-	await animateOpacity(parent, 1, 0,100);
-	parent.remove();
-
-	const childCnt=listItems.childElementCount;
-	counter.innerText = childCnt;
-	if (counter.innerText == 0) {
-		emptyMesaage.style.opacity = 1;
-	}
+	await animateOpacity(target, 1, 0,100);
+	target.remove();
+	updateCounter(listItems.childElementCount);
   inputBox.focus();
 
 	if(nextNode){
 		const siblings=[];
 		siblings.push(nextNode);
-		while(nextNode) {
+		while(true) {
 			nextNode=nextNode.nextSibling;
+			if(nextNode === null) break;
 			siblings.push(nextNode);
 		}
 		await animateMoveUp(siblings,100);
