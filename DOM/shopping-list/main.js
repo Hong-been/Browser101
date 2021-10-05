@@ -1,4 +1,5 @@
 const counter = document.querySelector(".top__counter");
+const form=document.querySelector("form.bottom");
 const inputBox = document.querySelector(".bottom__input");
 const inputBtn = document.querySelector(".bottom__add");
 const listItems = document.querySelector(".list__items");
@@ -6,6 +7,10 @@ const emptyMesaage = document.querySelector(".list__empty");
 let id=0; //실제 배포 프로젝트에는 UUID 같은 라이브러리를 사용하자.
 
 addEventListener("keydown",()=>inputBox.focus());
+form.addEventListener("submit",event=>{
+	event.preventDefault();
+	addRow();
+});
 
 listItems.addEventListener('click',event=>{
 	const { target:{dataset:{targetId}}}=event;
@@ -14,24 +19,22 @@ listItems.addEventListener('click',event=>{
 		deleteItem(toBeDeleted);
 	}
 });
-
-inputBtn.addEventListener("click", async (event) => {
-	event.preventDefault();
-	const inputText = inputBox.value;
+async function addRow(event){
+const inputText = inputBox.value;
 	if (!inputText) {
 		inputBox.focus();
 		return;
 	}
+
 	const row = createRow(inputText);
 	listItems.appendChild(row);
-
 	row.scrollIntoView({block:'end', behavior:'smooth'});
 	await animateOpacity(row, 0, 1,100);
 
 	inputBox.value = "";
 	inputBox.focus();
 	updateCounter(listItems.childElementCount);
-});
+}
 function createRow(inputText) {
 	emptyMesaage.style.opacity = 0;
 	
@@ -60,16 +63,15 @@ async function deleteItem(target) {
 	updateCounter(listItems.childElementCount);
   inputBox.focus();
 
-	if(nextNode){
-		const siblings=[];
+	if(!nextNode) return;
+	const siblings=[];
+	siblings.push(nextNode);
+	while(true) {
+		nextNode=nextNode.nextSibling;
+		if(nextNode === null) break;
 		siblings.push(nextNode);
-		while(true) {
-			nextNode=nextNode.nextSibling;
-			if(nextNode === null) break;
-			siblings.push(nextNode);
-		}
-		await animateMoveUp(siblings,100);
 	}
+	await animateMoveUp(siblings,100);
 }
 
 function animateMoveUp(elements,duration) {
