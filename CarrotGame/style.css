@@ -15,6 +15,9 @@ button{
 button:hover{
   transform: scale(1.1);
 }
+.hidden{
+  visibility:hidden;
+}
 .game{
   width:800px;
   height: 450px;
@@ -73,9 +76,7 @@ button:hover{
   position: fixed;
 }
 .field__result{
-  will-change: z-index;
-  z-index:0;
-  opacity: 0;
+  will-change: visibility;
   position: absolute;
   top:50%;
   left:50%;
@@ -97,9 +98,8 @@ button:hover{
   font-size: 1.8em;
 }
 .intro{
-  will-change: opacity;
+  will-change: visibility;
   position: absolute;
-  z-index: 3;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);

@@ -60,11 +60,8 @@ function playAudio(audio){
 }
 
 function startGame(){
-  introWindow.style.opacity=0;
-  introWindow.style.zIndex=-1;
+  introWindow.classList.toggle("hidden");
   playAudio(bgSound);
-  result.style.zIndex=-1;
-  result.style.opacity=0;
   counter.innerText=10;
   pauseBtn.innerHTML=`<i class="fas fa-pause"></i>`;
   timerObj.start();
@@ -86,8 +83,7 @@ function endGame(isWinning){
 
   bgSound.pause();
   timerObj.pause();
-  result.style.zIndex=1;
-  result.style.opacity=1;
+  result.classList.toggle("hidden");
   if(isWinning) playAudio(winSound);
   else playAudio(alertSound);
 }
