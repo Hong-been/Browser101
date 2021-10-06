@@ -12,7 +12,13 @@ button{
   cursor: pointer;
   border-style: none;
 }
-.screen{
+button:hover{
+  transform: scale(1.1);
+}
+.hidden{
+  visibility:hidden;
+}
+.game{
   width:800px;
   height: 450px;
   background: center / contain no-repeat url("./img/background.png");
@@ -59,23 +65,17 @@ button{
   font-size:0.9em;
   color:white;
 }
-.main{
+.field{
   height:60%;
-  padding:0 80px 80px 0;
 }
-.items{
+.field__items{
   height:100%;
 }
-.item{
-  position: fixed;
+.field__items>img{
+  position: absolute;
 }
-.item:hover{
-  transform: scale(1.1);
-}
-.result{
-  will-change: z-index;
-  z-index:0;
-  opacity: 0;
+.field__result{
+  will-change: visibility;
   position: absolute;
   top:50%;
   left:50%;
@@ -92,6 +92,24 @@ button{
   width:500px;
   height:250px;
 }
-.result__replay{
+.result__replay,
+.intro__play{
   font-size: 1.8em;
+}
+.intro{
+  will-change: visibility;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  background-color: rgba(255, 156, 91, 0.9);
+  text-align: center;
+  font-size: 2em;
+  border-radius: 40px;
+  width:600px;
+  height:300px;
 }

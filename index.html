@@ -6,30 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap" rel="stylesheet">
   <script src="main.js" defer></script>
   <script
 			src="https://kit.fontawesome.com/5767795c70.js"
 			crossorigin="anonymous"
 		></script>
-  <title>Can you CATCH all? 😎</title>
+  <title>CATCH ALL CARROTS😎</title>
 </head>
 <body>
-  <section class="screen">
+  <section class="game">
+    <section class="intro">
+      <button type="button"class="intro__play"><i class="fas fa-play"></i></button>
+      <div class="intro__message">START TO CATCH ALL 🥕CARROTS🥕</div>
+    </section>
     <header class="header">
-      <div class="header__remaining">10</div>
-      <div class="header__timer">00:10</div>
-      <button class="pause"><i class="fas fa-pause"></i></button>
+      <div class="header__remaining hidden"></div>
+      <div class="header__timer hidden">5</div>
+      <button class="pause hidden"><i class="fas fa-pause"></i></button>
     </header>
-    <main class="main">
-      <section class=items>
+    <main class="field">
+      <section class="field__items hidden">
       </section>
-      <section class="result">
+      <section class="field__result hidden">
         <button class="result__replay"><i class="fas fa-redo"></i></button>
         <div class="result__message">🤯 TIME OVER! TRY AGAIN! 🤯</div>
       </section>
-      
     </main>
   </section>
 </body>
