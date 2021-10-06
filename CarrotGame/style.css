@@ -1,6 +1,7 @@
 *{
   box-sizing: border-box;
   padding:0; margin:0;
+  font-family: 'Gemunu Libre', sans-serif;
 }
 body{
   height:100vh;
@@ -67,6 +68,9 @@ button{
 }
 .item{
   position: fixed;
+}
+.item:hover{
+  transform: scale(1.1);
 }
 .result{
   will-change: z-index;

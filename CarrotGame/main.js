@@ -8,62 +8,105 @@ const stage=document.querySelector(".items");
 const mins=0, secs=10, duration=mins*60+secs;
 const winMessage="🤩 WOW! YOU WIN! 🤩";
 let isPaused=false;
-
+const bgSound=new Audio("./sound/bg.mp3");
+const bugSound=new Audio("./sound/bug_pull.mp3");
+const carrotSound=new Audio("./sound/carrot_pull.mp3");
+const winSound=new Audio("./sound/game_win.mp3");
+const alertSound=new Audio("./sound/alert.wav");
 
 window.addEventListener('load',startGame);
 replayBtn.addEventListener('click',()=>window.location.reload());
 pauseBtn.addEventListener('click',()=>{
   if(!isPaused){
     timerObj.pause();
+    stage.removeEventListener('click',removeItem);
     pauseBtn.innerHTML=`<i class="fas fa-play"></i>`;
+    bgSound.pause();
+    playAudio(alertSound);
   }
   else{
     timerObj.resume();
+    stage.addEventListener('click',removeItem);
     pauseBtn.innerHTML=`<i class="fas fa-pause"></i>`;
+    playAudio(bgSound);
   }
   isPaused=!isPaused;
 });
-stage.addEventListener('click',event=>{
+stage.addEventListener('click',removeItem);
+
+function removeItem(event){
   const {target}=event;
-  if(!target.classList.contains("carrot")) return;
+  if(!target.classList.contains("item")) return;
+  if(target.classList.contains("bug")) {
+    playAudio(bugSound);
+    return;
+  }
   target.remove();
+  playAudio(carrotSound);
   counter.innerText-=1;
   if(counter.innerText==0){
     resultMessage.innerText=winMessage;
-    endGame(winMessage);
+    endGame();
+    playAudio(winSound);
   }
-});
+}
+function playAudio(audio){
+  audio.currentTime=0;
+  audio.play();
+}
 
 function startGame(){
+  playAudio(bgSound);
   result.style.zIndex="-1";
   result.style.opacity=0;
   counter.innerText=10;
   pauseBtn.innerHTML=`<i class="fas fa-pause"></i>`;
   timerObj.start();
   showRandomItems();
+
+  const items=document.querySelectorAll(".item");
+  items.forEach(item=>{
+    item.addEventListener('mouseenter',()=>{
+    item.style.transform+="scale(1.2)";})
+    item.addEventListener('mouseleave',()=>{
+      item.style.transform+="scale(0.8)";})
+  }
+  );
 }
 function endGame(){
+  stage.removeEventListener('click',removeItem);
+  bgSound.pause();
   timerObj.pause();
   result.style.zIndex="1";
   result.style.opacity=1;
 }
 function showRandomItems(){
   const {width,height}=stage.getBoundingClientRect();
-  let string='';
+  const fragment = new DocumentFragment();
 
   for(let i=0;i<counter.innerText;i++){
     const random=(max)=>Math.floor(Math.random() * max);
     const top=random(height);
     const left=random(width);
-    string+=`<img class="item carrot" src="img/carrot.png" style="transform:translate(${left}px,${top}px)">`;
+    
+    const item=document.createElement('img');
+    item.setAttribute('src','img/carrot.png');
+    item.classList.add('item','carrot');
+    item.style.transform=`translate(${left}px,${top}px)`;
+    fragment.appendChild(item);
   }
   for(let i=0;i<counter.innerText;i++){
     const random=(max)=>Math.floor(Math.random() * max);
     const top=random(height);
     const left=random(width);
-    string+=`<img class="item bug" src="img/bug.png" style="transform:translate(${left}px,${top}px)">`;
+
+    const item=document.createElement('img');
+    item.setAttribute('src','img/bug.png');
+    item.classList.add('item','bug');
+    item.style.transform=`translate(${left}px,${top}px)`;
+    fragment.appendChild(item);
   }
-  stage.innerHTML+=string;
+  stage.appendChild(fragment);
 }
 class Timer{
   constructor(duration,display,printDone){
