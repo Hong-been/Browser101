@@ -71,8 +71,14 @@ button:hover{
 .field__items{
   height:100%;
 }
-.field__items>img{
+.carrot,
+.bug{
   position: absolute;
+  transition: transform 100ms ease-in;
+}
+.carrot:hover, 
+.bug:hover{
+  transform: scale(1.2);
 }
 .field__result{
   will-change: visibility;
@@ -95,6 +101,8 @@ button:hover{
 .result__replay,
 .intro__play{
   font-size: 1.8em;
+  color:#5f3300;
+  margin-bottom: 20px;
 }
 .intro{
   will-change: visibility;
@@ -106,10 +114,11 @@ button:hover{
   flex-direction: column;
   justify-content: center;
   align-items:center;
-  background-color: rgba(255, 156, 91, 0.9);
+  background: rgb(255, 179, 108);
   text-align: center;
   font-size: 2em;
   border-radius: 40px;
   width:600px;
   height:300px;
+  color:#5f3300;
 }
