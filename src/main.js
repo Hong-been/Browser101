@@ -1,5 +1,6 @@
 'use strict';
 import Timer from "./timer.js";
+import PopUp from "./popup.js";
 
 const CARROT_SIZE = 80;
 const WINNER = "🤩 WOW! YOU WON! 🤩";
@@ -17,9 +18,6 @@ const counter = document.querySelector(".header__remaining");
 const pauseBtn = document.querySelector(".header__pause");
 
 const field = document.querySelector(".field");
-const gamePopUp = document.querySelector(".popup");
-const gamePopUpBtn = document.querySelector(".popup__button");
-const gamePopUpTxt = document.querySelector(".popup__txt");
 
 const bgSound = new Audio("./sound/bg.mp3");
 const bugSound = new Audio("./sound/bug_pull.mp3");
@@ -31,11 +29,16 @@ let started = false;
 let score = 0;
 let gameTimer;
 
+const gameReplayBanner=new PopUp();
+gameReplayBanner.setClickListner(initGame);
+
 initGame();
 
 function initGame() {
+	gameReplayBanner.hide();
+	
 	introPopUpBtn.addEventListener("click", startGame);
-	gamePopUpBtn.addEventListener("click", initGame);
+	
 	pauseBtn.addEventListener("click", controlPause);
 	field.addEventListener("click", removeItem);
 
@@ -51,8 +54,7 @@ function initGame() {
 
 	header.classList.add("header--hide");
 	field.classList.add("field--hide");
-	gamePopUp.classList.add("popup--hide");
-
+	
 	introPopUp.classList.remove("intro--hide");
 }
 
@@ -64,49 +66,40 @@ function startGame() {
 	header.classList.remove("header--hide");
 	field.classList.remove("field--hide");
 
-	gamePopUp.classList.add("popup--hide");
 	introPopUp.classList.add("intro--hide");
 }
 
 function endGame(win) {
+	started=false;
 	score = 0;
 	gameTimer.pause();
 
 	pauseAudio(bgSound);
-	showResultPopUp(win);
 
+	if (win) {
+		gameReplayBanner.showWithText(WINNER);
+		playAudio(winSound);
+	} else {
+		gameReplayBanner.showWithText(LOSER);
+		playAudio(alertSound);
+	}
+	
 	field.removeEventListener("click", removeItem);
 	pauseBtn.removeEventListener("click", controlPause);
 	introPopUpBtn.removeEventListener("click", startGame);
 }
 
-function showResultPopUp(win) {
-	if (win) {
-		gamePopUpTxt.innerText = WINNER;
-		playAudio(winSound);
-	} else {
-		gamePopUpTxt.innerText = LOSER;
-		playAudio(alertSound);
-	}
-	gamePopUp.classList.remove("popup--hide");
-}
-
-function showReplayPopUp() {
-	gamePopUpTxt.innerText = REPLAY;
-	gamePopUp.classList.remove("popup--hide");
-}
-
 function controlPause() {
 	field.classList.add("field--hide");
-
+	
 	if (started) {
 		gameTimer.pause();
+		gameReplayBanner.showWithText(REPLAY);
 		pauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
 		pauseAudio(bgSound);
 		playAudio(alertSound);
-    showReplayPopUp();
 	} else {
-		gamePopUp.classList.add("popup--hide");
+		gameReplayBanner.hide();
     header.classList.remove("header--hide");
 		field.classList.remove("field--hide");
 
@@ -131,7 +124,6 @@ function removeItem(event) {
 	playAudio(carrotSound);
 	counter.innerText = ITEM_COUNT - score;
 	if (ITEM_COUNT === score) {
-		gamePopUpTxt.innerText = WINNER;
 		endGame(true);
 	}
 }
@@ -149,11 +141,10 @@ function addItem(className, num, imgPath) {
 		const item = document.createElement("img");
 		item.setAttribute("src", imgPath);
 		item.setAttribute("class", className);
-    item.setAttribute("draggable",false);
-		item.style.transform = `translate(${left}px,${top}px) scale(1.0)`;
+    item.setAttribute("draggable", false);
+		item.style.transform = `translate(${left}px,${top}px)`;
 		fragment.appendChild(item);
 	}
-
 	field.appendChild(fragment);
 }
 
