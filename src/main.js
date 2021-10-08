@@ -1,7 +1,7 @@
 "use strict";
 import PopUp from "./popup.js";
 import Intro from "./intro.js";
-import Game from "./game.js";
+import GameBuilder from "./game.js";
 
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
@@ -12,13 +12,13 @@ const LOSER = "👽 YOU LOST! TRY AGAIN! 👽";
 const REPLAY = "🐞 REPLAY? 🐞";
 
 const gameReplayBanner = new PopUp();
-const game = new Game(DURATION_SEC, CARROT_COUNT, BUG_COUNT);
 const gameIntroBanner = new Intro();
-
+const game = new GameBuilder().withGameDuration(DURATION_SEC)
+															.withCarrotCount(CARROT_COUNT)
+															.withBugCount(BUG_COUNT)
+															.build();
 
 gameIntroBanner.setClickListner(game.start);
-gameReplayBanner.setClickListner(game.init);
-
 game.setGameReadyListner(gameIntroBanner.show);
 game.setGameResumeListner(()=>{gameReplayBanner.hide();});
 game.setGameStopListner((reason) => {
@@ -36,4 +36,5 @@ game.setGameStopListner((reason) => {
 			throw new Error("not valid error");
 	}
 });
+gameReplayBanner.setClickListner(game.init);
 game.init();
