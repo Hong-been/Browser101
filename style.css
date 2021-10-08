@@ -119,6 +119,7 @@ button:hover{
 .intro--hide,
 .header--hide,
 .field--hide,
-.popup--hide{
+.popup--hide,
+.pauseBtn--hide{
   visibility:hidden;
 }

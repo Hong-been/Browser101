@@ -9,13 +9,18 @@ export default class Field{
     this.bugCount=bugCount;
     this.field = document.querySelector(".field");
     this.fieldRect=this.field.getBoundingClientRect();
-    this.field.addEventListener('click',this.onClick);
   }
-  setClickListner(onItemClick){
+
+  setItemClickListner(onItemClick){
     this.onItemClick=onItemClick;
   }
 
+  removeClickListner(){
+    this.onClick && this.field.removeEventListener('click',this.onClick);
+  }
+
   init(){
+    this.field.addEventListener('click',this.onClick);
     this.field.innerHTML="";
     this._addItem("carrot", "img/carrot.png");
     this._addItem("bug", "img/bug.png");
