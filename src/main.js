@@ -25,7 +25,10 @@ let score;
 let gameTimer;
 
 const gameReplayBanner=new PopUp();
+gameReplayBanner.setClickListner(initGame);
+
 const gameField=new Field(CARROT_COUNT,BUG_COUNT);
+gameField.setClickListner(onItemClick);
 
 initGame();
 
@@ -40,7 +43,6 @@ function initGame() {
 	pauseBtn.addEventListener("click", controlPause);
 
 	gameField.init();
-	gameField.setClickListner(onItemClick);
 	gameField.hide();
 	
 	pauseBtn.innerHTML = `<i class="fas fa-pause"></i>`;
@@ -80,7 +82,6 @@ function endGame(win) {
 	}
 	
 	pauseBtn.removeEventListener("click", controlPause);
-	introPopUpBtn.removeEventListener("click", startGame);
 }
 
 function controlPause() {
@@ -105,12 +106,11 @@ function controlPause() {
 }
 
 function onItemClick(item) {
-	console.log(item);
 	if (!started) return;
 	if(item==='carrot'){
 		score += 1;
 		counter.innerText = CARROT_COUNT - score;
-		if (CARROT_COUNT === this.score) {
+		if (CARROT_COUNT === score) {
 			endGame(true);
 		}
 	}

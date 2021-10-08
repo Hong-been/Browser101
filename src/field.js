@@ -49,12 +49,11 @@ export default class Field{
     this.field.classList.remove("field--hide");
   }
 
-  onClick(event) {
+  onClick = (event) => {
     const target = event.target;
     if (target.matches(".carrot")){
       sound.playCarrot();
       target.remove();
-      console.log(this.onItemClick);
       this.onItemClick && this.onItemClick('carrot');
     }else if (target.matches(".bug")) {
       sound.playBug();
