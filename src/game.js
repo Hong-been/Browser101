@@ -3,7 +3,13 @@ import Field from "./field.js";
 import Timer from "./timer.js";
 import * as sound from "./sound.js";
 
-export default class GameBuilder{
+export const Reason = Object.freeze({
+  win:'win',
+  lose:'lose',
+  pause:'pause',
+});
+
+export class GameBuilder{
   withGameDuration(duration){
     this.gameDuration=duration;
     return this;
@@ -91,13 +97,11 @@ class Game {
 
 		sound.stopBackground();
 		if (win) {
-      this.onGameStop('win');
 			sound.playWin();
 		} else {
-      this.onGameStop('lose');
 			sound.playAlert();
 		}
-
+    this.onGameStop && this.onGameStop(win? Reason.win : Reason.lose);
     this.gameTimer.pause();
 		this.pauseBtn.classList.add("pauseBtn--hide");
 	}
@@ -106,7 +110,7 @@ class Game {
     this.gameField.hide();
     
     if (this.started) {
-      this.onGameStop('stop');
+      this.onGameStop(Reason.pause);
       this.gameTimer.pause();
       this.pauseBtn.innerHTML = `<i class="fas fa-play"></i>`;
       sound.stopBackground();

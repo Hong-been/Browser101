@@ -20,7 +20,7 @@ export default class PopUp{
     this.gamePopUp.classList.remove("popup--hide");
   }
 
-  hide(){
+  hide=()=>{
     this.gamePopUp.classList.add("popup--hide");
   }
 }

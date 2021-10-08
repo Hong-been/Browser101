@@ -1,7 +1,7 @@
 "use strict";
 import PopUp from "./popup.js";
 import Intro from "./intro.js";
-import GameBuilder from "./game.js";
+import { GameBuilder, Reason } from "./game.js";
 
 const CARROT_COUNT = 10;
 const BUG_COUNT = 10;
@@ -18,18 +18,20 @@ const game = new GameBuilder().withGameDuration(DURATION_SEC)
 															.withBugCount(BUG_COUNT)
 															.build();
 
+
 gameIntroBanner.setClickListner(game.start);
+
 game.setGameReadyListner(gameIntroBanner.show);
-game.setGameResumeListner(()=>{gameReplayBanner.hide();});
+game.setGameResumeListner(gameReplayBanner.hide);
 game.setGameStopListner((reason) => {
 	switch (reason) {
-		case "win":
+		case Reason.win:
 			gameReplayBanner.showWithText(WINNER);
 			break;
-		case "lose":
+		case Reason.lose:
 			gameReplayBanner.showWithText(LOSER);
 			break;
-		case "stop":
+		case Reason.pause:
 			gameReplayBanner.showWithText(REPLAY);
 			break;
 		default:
