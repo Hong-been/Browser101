@@ -15,9 +15,6 @@ button{
 button:hover{
   transform: scale(1.1);
 }
-.hidden{
-  visibility:hidden;
-}
 .game{
   width:800px;
   height: 450px;
@@ -49,7 +46,7 @@ button:hover{
   border:thick solid rgb(141, 141, 141);
 }
 .header__remaining,
-.pause, .resume{
+.header__pause{
   font-size:2em;
   font-weight: 600;
   width:60px;
@@ -60,22 +57,24 @@ button:hover{
   border-radius: 50%;
   color:white;
 }
-.pause .fas, .resume .fas,
-.result__replay .fas{
+.header__pause .fas, .resume .fas,
+.popup__button .fas{
   font-size:0.9em;
   color:white;
 }
 .field{
   height:60%;
-  padding:0 80px 80px 0;
 }
-.field__items{
-  height:100%;
+.carrot,
+.bug{
+  position: absolute;
+  transition: transform 100ms ease-in;
 }
-.item{
-  position: fixed;
+.carrot:hover, 
+.bug:hover{
+  transform: scale(1.2);
 }
-.field__result{
+.popup{
   will-change: visibility;
   position: absolute;
   top:50%;
@@ -93,13 +92,15 @@ button:hover{
   width:500px;
   height:250px;
 }
-.result__replay,
+.popup__button,
 .intro__play{
   font-size: 1.8em;
+  color:#5f3300;
+  margin-bottom: 20px;
 }
 .intro{
   will-change: visibility;
-  position: absolute;
+  position: fixed;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
@@ -107,10 +108,18 @@ button:hover{
   flex-direction: column;
   justify-content: center;
   align-items:center;
-  background-color: rgba(255, 156, 91, 0.9);
+  background: rgb(255, 179, 108);
   text-align: center;
   font-size: 2em;
   border-radius: 40px;
   width:600px;
   height:300px;
+  color:#5f3300;
+}
+.intro--hide,
+.header--hide,
+.field--hide,
+.popup--hide,
+.pauseBtn--hide{
+  visibility:hidden;
 }
