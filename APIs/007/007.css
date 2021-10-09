@@ -1,0 +1,31 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background-color: black;
+	height: 100%;
+}
+.target {
+	height: 50px;
+	width: 50px;
+	position: absolute;
+}
+.coordinates {
+	color: white;
+	position: absolute;
+	margin: 10px;
+}
+.line {
+	display: block;
+	position: absolute;
+	background-color: white;
+}
+.line.horizontal {
+	height: 1px;
+	width: 100%;
+}
+.line.vertical {
+	height: 100%;
+	width: 1px;
+}
