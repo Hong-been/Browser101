@@ -63,16 +63,17 @@ button:hover{
   color:white;
 }
 .field{
+  position: relative;
   height:60%;
 }
 .carrot,
 .bug{
   position: absolute;
-  transition: transform 100ms ease-in;
+  transition: transform 60ms;
 }
 .carrot:hover, 
 .bug:hover{
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 .popup{
   will-change: visibility;
