@@ -24,28 +24,30 @@ export default class Field{
     this.field.innerHTML="";
     this._addItem("carrot", "img/carrot.png");
     this._addItem("bug", "img/bug.png");
+    this.hide();
   }
 
   _addItem(className, imgPath) {
-    this.width = this.fieldRect.width - CARROT_SIZE;
-    this.height = this.fieldRect.height - CARROT_SIZE;
+    this.rectWidth = this.fieldRect.width - CARROT_SIZE;
+    this.rectHeight = this.fieldRect.height - CARROT_SIZE;
     this.fragment = new DocumentFragment();
-  
+
     for (let i = 0; i < this.carrotCount; i++) {
-      this.top = random(this.height);
-      this.left = random(this.width);
-  
+      this.top = random(this.rectHeight);
+      this.left = random(this.rectWidth);
+
       this.item = document.createElement("img");
       this.item.setAttribute("src", imgPath);
       this.item.setAttribute("class", className);
       this.item.setAttribute("draggable", false);
-      this.item.style.transform = `translate(${this.left}px,${this.top}px)`;
+      this.item.style.top = `${this.top}px`;
+      this.item.style.left = `${this.left}px`;
 
       this.fragment.appendChild(this.item);
     }
     this.field.appendChild(this.fragment);
   }
-  
+
   hide(){
     this.field.classList.add("field--hide");
   }
@@ -69,9 +71,4 @@ export default class Field{
 
 function random(max){
   return Math.floor(Math.random() * max);
-}
-
-function playAudio(audio) {
-  audio.currentTime = 0;
-  audio.play();
 }

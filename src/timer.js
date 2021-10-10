@@ -34,7 +34,7 @@ export default class Timer {
 			if (this.duration <= 0) {
 				clearInterval(this.interval);
 				this.interval = null;
-				this.callBack(false);
+				this.callBack();
 			}else{
 				this.mins = `${parseInt(this.duration / 60)}`;
 				this.secs = `${this.duration % 60}`;
