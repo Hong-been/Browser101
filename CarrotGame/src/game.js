@@ -1,5 +1,5 @@
 "use strick";
-import Field from "./field.js";
+import { Field, ItemType } from "./field.js";
 import Timer from "./timer.js";
 import * as sound from "./sound.js";
 
@@ -126,13 +126,13 @@ class Game {
 
 	onItemClick = (item) => {
 		if (!this.started) return;
-		if (item === "carrot") {
+		if (item === ItemType.carrot) {
 			this.score += 1;
       this.updateRemainingCarrot(this.carrotCount - this.score);
 			if (this.carrotCount === this.score) {
 				this.stop(Reason.win);
 			}
-		}else if (item === "bug") {
+		}else if (item === ItemType.bug) {
         this.stop(Reason.lose);
     }
 	};
