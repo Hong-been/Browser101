@@ -14,6 +14,7 @@
 - [당근게임 url✨](https://hong-been.github.io/Browser101/)
 - [깃허브 주소](https://github.com/Hong-been/Browser101/tree/carrot)
 - 10개의 당근을 5초내에 모두 클릭하면 성공하는 게임입니다.
+- 배경음악과 효과음을 적용하여 상황에 맞게 재생됩니다.
 - 일시정지, 일시정지 혹은 게임완료 시 리플레이할 수 있습니다.
 - 자바스크립트로만 구현하였으며, 기능별로 js파일을 분할하여 모듈화하여 사용하였습니다.
 - game모듈은 builder pattern을 사용하여 생성하였습니다.
