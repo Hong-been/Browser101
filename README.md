@@ -1,8 +1,8 @@
 # Browser101
 - 자바스크립트 강의를 들으며 작성한 코드노트입니다.
 
-### 쇼핑몰 앱
-- [깃허브 주소](https://github.com/Hong-been/Browser101/tree/WebAPI/DOM/shopping-list)
+### 쇼핑리스트 앱
+- [깃허브 주소](https://github.com/Hong-been/Browser101/tree/master/shopping-list)
 - [구현 영상](https://sulfuric-lunge-ed9.notion.site/Shopping-List-561008354b2d421eb09451c170af42f5)
 - BEM convention에 대해 알고 적용해볼 수 있었습니다.
 - 자바스크립트로 애니메이션을 추가하고, async-await를 적용하였습니다.
